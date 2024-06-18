@@ -1,0 +1,33 @@
+<!-- templates/product.liquid -->
+<!DOCTYPE html>
+<html>
+<head>
+  <title>{{ product.title }}</title>
+  {{ content_for_header }}
+</head>
+<body>
+  <header>
+    <h1>{{ product.title }}</h1>
+    <p>{{ product.description }}</p>
+    <p>Price: {{ product.price | money }}</p>
+  </header>
+  
+  <div>
+    <img src="{{ product.featured_image | img_url: 'large' }}" alt="{{ product.title }}">
+    <div>
+      {% for image in product.images %}
+        <img src="{{ image | img_url: 'small' }}" alt="{{ product.title }}">
+      {% endfor %}
+    </div>
+  </div>
+
+  <form action="/cart/add" method="post" enctype="multipart/form-data">
+    <input type="hidden" name="id" value="{{ product.variants.first.id }}">
+    <button type="submit">Add to Cart</button>
+  </form>
+
+  <footer>
+    {{ content_for_footer }}
+  </footer>
+</body>
+</html>
